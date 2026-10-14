@@ -29,14 +29,14 @@
 
 ## 📦 编译时自动下载最新代理内核与规则列表
 
-x86-64 编译（`x86-64/build25.sh`）会自动调用 `shell/fetch-proxy-data.sh`，按已启用的插件下载最新文件打包进固件：
+x86-64 编译（`x86-64/build24.sh` 对应 24.10.x / ipk、`x86-64/build25.sh` 对应 25.12.x / apk）会自动调用 `shell/fetch-proxy-data.sh`，按已启用的插件下载最新文件打包进固件：
 
 - **OpenClash**：Meta 内核（`clash_meta`）+ Smart 内核 + GeoIP/GeoSite/ASN/Country 数据，存放于固件 `/etc/openclash/core/` 与 `/etc/openclash/`。
   - 注意：OpenClash 插件只认 `clash_meta` 一个内核文件。Smart 内核以 `clash_smart.tar.gz` 形式存放在 `/etc/openclash/core/` 做离线备用，切换时手动解压覆盖 `clash_meta` 并重启 OpenClash 服务即可：`cd /etc/openclash/core && tar -xzOf clash_smart.tar.gz clash > clash_meta && chmod 4755 clash_meta`。
 - **Nikki**：GeoX 数据库（`geoip.dat` / `geosite.dat` / `geoip.metadb` / `GeoLite2-ASN.mmdb`，来源 MetaCubeX/meta-rules-dat），存放于固件 `/etc/nikki/run/`。
 - **Passwall**：IP 列表（`chnroute` / `chnroute6`）与域名列表（`gfwlist` / `chnlist`），存放于 `/usr/share/passwall/rules/` 与 `/etc/passwall/rules/`。
 
-启用方式：在 `shell/apk-custom-packages.sh` 里取消 `luci-app-openclash`、`luci-i18n-nikki-zh-cn`、`luci-app-passwall2` 三行的注释即可。任一下载失败会中断编译（避免把空文件打进固件），重跑一次即可。
+启用方式：25.12.x 在 `shell/apk-custom-packages.sh` 里取消 `luci-app-openclash`、`luci-i18n-nikki-zh-cn`、`luci-app-passwall2` 三行的注释；24.10.x 的 `shell/custom-packages.sh` 里这三项默认已启用。任一下载失败会中断编译（避免把空文件打进固件），重跑一次即可。
 
 ## [基本用法步骤](https://github.com/wukongdaily/AutoBuildImmortalWrt/wiki) 👈🏻
 1、fork本项目<br>

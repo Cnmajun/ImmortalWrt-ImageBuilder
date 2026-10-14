@@ -70,18 +70,12 @@ if [ "$INCLUDE_DOCKER" = "yes" ]; then
     echo "Adding package: luci-i18n-dockerman-zh-cn"
 fi
 
-# 若构建openclash 则添加内核
+# ============= 自动下载最新代理内核 + IP/域名列表（OpenClash / Nikki / Passwall）=============
+# 必须放在 PACKAGES 拼完之后调用，脚本按 $PACKAGES 判断装了哪些插件。
+ARCH=amd64 FILES_DIR=files sh shell/fetch-proxy-data.sh
+
 if echo "$PACKAGES" | grep -q "luci-app-openclash"; then
-    echo "✅ 已选择 luci-app-openclash，添加 openclash core"
-    mkdir -p files/etc/openclash/core
-    # Download clash_meta
-    META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64-v1.tar.gz"
-    wget -qO- $META_URL | tar xOvz > files/etc/openclash/core/clash_meta
-    chmod +x files/etc/openclash/core/clash_meta
-    # Download GeoIP and GeoSite
-    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O files/etc/openclash/GeoIP.dat
-    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O files/etc/openclash/GeoSite.dat
-    # Download latest openclash Client
+    echo "✅ 已选择 luci-app-openclash，下载最新 OpenClash 插件 apk"
     URL=$(curl -s https://api.github.com/repos/vernesong/OpenClash/releases/latest \
       | grep "browser_download_url.*apk" \
       | head -n1 \

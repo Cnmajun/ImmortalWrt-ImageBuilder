@@ -36,8 +36,6 @@ x86-64 编译（`x86-64/build24.sh` 对应 24.10.x / ipk、`x86-64/build25.sh` �
 - **Nikki**：GeoX 数据库（`geoip.dat` / `geosite.dat` / `geoip.metadb` / `GeoLite2-ASN.mmdb`，来源 MetaCubeX/meta-rules-dat），存放于固件 `/etc/nikki/run/`。
 - **Passwall**：IP 列表（`chnroute` / `chnroute6`）与域名列表（`gfwlist` / `chnlist`），存放于 `/usr/share/passwall/rules/` 与 `/etc/passwall/rules/`。
 
-编译产物文件名：`ImmortalWrt-<版本>-x86-64-bypass-squashfs-efi.img.gz`（版本从 ImageBuilder 原始文件名解析，如 25.12.1；`build24.sh` / `build25.sh` 在 `make image` 成功后自动重命名，workflow 上传通配符已同步）。
-
 启用方式：25.12.x 在 `shell/apk-custom-packages.sh` 里取消 `luci-app-openclash`、`luci-i18n-nikki-zh-cn`、`luci-app-passwall2` 三行的注释；24.10.x 的 `shell/custom-packages.sh` 里这三项默认已启用。任一下载失败会中断编译（避免把空文件打进固件），重跑一次即可。
 
 ## [基本用法步骤](https://github.com/wukongdaily/AutoBuildImmortalWrt/wiki) 👈🏻

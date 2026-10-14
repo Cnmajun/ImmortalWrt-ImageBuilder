@@ -110,16 +110,4 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-
-# 自定义固件文件名：ImmortalWrt-<版本>-x86-64-bypass-squashfs-efi.img.gz
-# 版本从 ImageBuilder 原始文件名中解析（如 25.12.1）
-cd bin/targets/x86/64/
-for f in immortalwrt-*-squashfs-combined-efi.img.gz; do
-    [ -e "$f" ] || continue
-    ver=${f#immortalwrt-}
-    ver=${ver%%-*}
-    mv "$f" "ImmortalWrt-${ver}-x86-64-bypass-squashfs-efi.img.gz"
-    echo "固件已重命名为: ImmortalWrt-${ver}-x86-64-bypass-squashfs-efi.img.gz"
-done
-cd /home/build/immortalwrt
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Build completed successfully."
